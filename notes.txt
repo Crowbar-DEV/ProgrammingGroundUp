@@ -1,0 +1,35 @@
+x86 has several
+general purpose registers:
+-%eax
+-%ebx
+-%ecx
+-%edx
+
+special-purpose registers:
+-%edi
+-%ebp
+-%esp
+-%eip
+
+(edi can be used as general purpose)
+
+movl $1, %eax
+
+moves the number one into %eax
+
+dollar sign indicates immediate mode addressing,
+where a literal value is stored in the instruction 
+and moved into a register
+
+without the dollar sign we would be indicating
+direct addressing, loading whatever number is at
+address 1.
+
+system calls are made by loading what call we want into
+%eax, and setting up other needed registers, then calling
+an interrupt with the 'magic' value 0x80
+
+int 0x80
+
+
+
