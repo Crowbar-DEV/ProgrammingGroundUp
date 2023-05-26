@@ -31,5 +31,123 @@ an interrupt with the 'magic' value 0x80
 
 int 0x80
 
+assembler directives are instructions for the assembler,
+but not part of the instruction set for whatever arch.
+
+indexed addressing mode instructions in assembly:
+
+movl data_items(,%edi,4), %eax
+
+movl: move long
+data_items: label that stores address of instruction
+right after it
+(,%edi,4): this says to get the index, which in this case
+we have stored in %edi, multiply the index by our word size,
+and add that value to our adress specified by data_items,
+and grab data of word size 4.
+%eax: store into register eax
 
 
+Addressing Modes:
+
+general form of memory address references:
+
+ADDRESS_OR_OFFSET(%BASE_OR_OFFSET,%INDEX,MULTIPLIER)
+
+all of the fields are optional
+to calculate the address:
+
+FINAL ADDRESS = ADDRESS_OR_OFFSET + %BASE_OR_OFFSET + MULTIPLIER * %INDEX
+
+
+Direct addressing mode:
+===========================
+
+movl ADDRESS, %eax
+
+
+Indexed addressing mode:
+===========================
+
+movl string_start(,%ecx,1), %eax
+
+where ecx holds some value, the index of the string in this case
+
+
+Indirect addressing mode:
+============================
+
+loads a value from the address indicated by a register.
+
+movl (%eax), %ebx
+
+moves the value from the address stored in eax to ebx
+
+
+Base-Pointer addressing mode:
+===========================
+
+like indirect, but adds a constant to the address
+
+movl 4(%eax), %ebx
+
+moves the value at address in eax + 4 into ebx
+
+
+Immediate mode:
+===========================
+
+loads direct values into registers or memory locations.
+
+movl $12, %eax
+
+moves the number 12 into register eax, without the dollar 
+sign, we would be doing direct addressing
+
+
+Register addressing mode:
+===========================
+
+simply moves data in or out of a register
+
+
+
+
+=================================================================
+|   comparison instructions                                     |
+=================================================================
+
+cmpl - compares two values, affects %eflags register(status register) 
+
+=================================================================
+|   jump instructions                                           |
+=================================================================
+
+je - jump if values were equal
+
+jg - jump if second value was greater than first
+jge - jump if second value was greater than or equal than first
+
+jl - jump if second value was less than the first value
+jle - jump if second value was less than or equal to first value
+
+jmp - unconditional jump
+
+
+
+
+
+
+I quite like this excerpt from the book,
+
+
+"A typical program is composed of thousands of functions, each with a small, well-defined task to
+perform. However, ultimately there are things that you cannot write functions for which must be
+provided by the system. Those are called primitive functions - they are the basics which
+everything else is built off of. For example, imagine a program that draws a graphical user
+interface. There has to be a function to create the menus. That function probably calls other
+functions to write text, to write icons, to paint the background, calculate where the mouse pointer
+is, etc. However, ultimately, they will reach a set of primitives provided by the operating system
+to do basic line or point drawing. Programming can either be viewed as breaking a large program
+down into smaller pieces until you get to the primitive functions, or building functions on top of
+primitives until you get the large picture in focus."
